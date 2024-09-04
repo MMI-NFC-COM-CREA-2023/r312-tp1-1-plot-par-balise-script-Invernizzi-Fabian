@@ -4,7 +4,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
 <script type="module">
 
-const plot = Plot.rectY({length: 10000}, Plot.binX({y: "count"}, {x: Math.random})).plot();
+
+
+import {data} from "73a84b67a4fdd9ff"
+
+
+// Créer le graphique
+const plot = Plot.plot({
+  marginLeft: 110,
+  title: "Top 10 des nationalités vainqueurs de Grand Chelem",
+  x: { label: "Nb de victoires" },
+  y: { label: "Nationalités" },
+  marks: [
+    Plot.barX(
+      data,
+      Plot.groupY({ x: "count" }, { y: "WINNER_NATIONALITY", tip: true, sort: { y: "x", reverse: true, limit: 10 } })
+    ),
+    Plot.ruleX([0])
+  ]
+});
+
 const div = document.querySelector("#myplot");
 div.append(plot);
 
